@@ -7,6 +7,7 @@ import 'data/repositories/weather_repository.dart';
 import 'logic/language_cubit/language_cubit.dart';
 import 'logic/language_cubit/language_state.dart';
 import 'logic/weather_cubit/weather_cubit.dart';
+import 'logic/search_cubit/search_cubit.dart';
 import 'presentation/screens/home_screen.dart';
 
 void main() {
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LanguageCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SearchCubit(context.read<WeatherRepository>()),
         ),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(

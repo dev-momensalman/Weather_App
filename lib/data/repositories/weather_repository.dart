@@ -21,6 +21,17 @@ class WeatherRepository {
     return WeatherModel.fromJson(jsonDecode(rawData));
   }
 
+  Future<List<String>> searchCities(String query) async {
+    if (query.isEmpty) return [];
+    try {
+      final rawData = await weatherProvider.getSearchSuggestions(query);
+      final List results = jsonDecode(rawData);
+      return results.map((item) => "${item['name']}, ${item['country']}").toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
   Future<Position> _getCurrentLocation(String lang) async {
     final isAr = lang == 'ar';
     

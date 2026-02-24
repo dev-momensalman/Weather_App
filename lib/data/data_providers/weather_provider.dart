@@ -10,4 +10,12 @@ class WeatherProvider {
     if (response.statusCode == 200) return response.body;
     throw 'خطأ في الاتصال بالسيرفر';
   }
+
+  Future<String> getSearchSuggestions(String query) async {
+    final String url =
+        'https://api.weatherapi.com/v1/search.json?key=$apiKey&q=$query';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) return response.body;
+    throw 'فشل جلب الاقتراحات';
+  }
 }

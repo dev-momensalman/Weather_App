@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,7 @@ import '../../logic/weather_cubit/weather_state.dart';
 import '../widgets/weather_theme.dart';
 import '../widgets/weather_widgets.dart';
 import '../widgets/weather_states_ui.dart';
+import '../../logic/search_cubit/search_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late AnimationController _pulseController;
   late Animation<double> _fadeAnimation;
   late Animation<double> _pulseAnimation;
+  Timer? _searchDebounce;
 
   @override
   void initState() {
@@ -56,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _searchFocus.dispose();
     _fadeController.dispose();
     _pulseController.dispose();
+    _searchDebounce?.cancel();
     super.dispose();
   }
 
@@ -157,6 +161,53 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       // ─── Search Bar + Lang Toggle ──────
                                       _buildSearchBar(context, accent, lang),
 
+                                      // ─── Search Suggestions ────────────
+                                      BlocBuilder<SearchCubit, SearchState>(
+                                        builder: (context, searchState) {
+                                          if (searchState is SearchSuccess &&
+                                              searchState.suggestions.isNotEmpty &&
+                                              _isSearching) {
+                                            return LayoutBuilder(
+                                              builder: (context, constraints) {
+                                                return Container(
+                                                  margin: const EdgeInsets.only(top: 4, left: 2, right: 52),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black.withValues(alpha: 0.8),
+                                                    borderRadius: BorderRadius.circular(20),
+                                                    border: Border.all(color: Colors.white10),
+                                                  ),
+                                                  constraints: const BoxConstraints(maxHeight: 200),
+                                                  child: ListView.separated(
+                                                    padding: EdgeInsets.zero,
+                                                    shrinkWrap: true,
+                                                    itemCount: searchState.suggestions.length,
+                                                    separatorBuilder: (_, __) => const Divider(color: Colors.white10, height: 1),
+                                                    itemBuilder: (context, i) {
+                                                      final city = searchState.suggestions[i];
+                                                      return ListTile(
+                                                        dense: true,
+                                                        title: Text(
+                                                          city,
+                                                          style: GoogleFonts.cairo(color: Colors.white, fontSize: 13),
+                                                        ),
+                                                        onTap: () {
+                                                          context.read<SearchCubit>().clearSuggestions();
+                                                          _searchController.text = city;
+                                                          context.read<WeatherCubit>().getWeather(city: city, lang: lang);
+                                                          _searchFocus.unfocus();
+                                                          setState(() => _isSearching = false);
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }
+                                          return const SizedBox.shrink();
+                                        },
+                                      ),
+
                                       const SizedBox(height: 16),
 
                                       // ─── City + Country ───────────────
@@ -251,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             accent,
                                             isAr),
 
-                                      const SizedBox(height: 16),
+                                      const SizedBox(height: 12),
 
                                       // ─── Stats Grid ───────────────────
                                       WeatherStatsGrid(
@@ -265,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         lang: lang,
                                       ),
 
-                                      const SizedBox(height: 20),
+                                      const SizedBox(height: 12),
 
                                       // ─── Hourly Forecast ──────────────
                                       if (w.hourly.isNotEmpty)
@@ -275,13 +326,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           lang: lang,
                                         ),
 
-                                      const SizedBox(height: 20),
+                                      const SizedBox(height: 12),
 
                                       // ─── 7-Day Forecast Card ──────────
                                       _buildDailyForecastCard(
                                           w.forecast, weatherType, accent, lang),
 
-                                      const SizedBox(height: 16),
+                                      const SizedBox(height: 12),
 
                                       // ─── Footer ───────────────────────
                                       Text(
@@ -371,12 +422,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     horizontal: 20, vertical: 16),
               ),
               onTap: () => setState(() => _isSearching = true),
+              onChanged: (val) {
+                _searchDebounce?.cancel();
+                _searchDebounce = Timer(const Duration(milliseconds: 500), () {
+                  if (val.trim().isNotEmpty) {
+                    context.read<SearchCubit>().getSuggestions(val.trim());
+                  } else {
+                    context.read<SearchCubit>().clearSuggestions();
+                  }
+                });
+              },
               onSubmitted: (city) {
                 if (city.trim().isNotEmpty) {
                   context
                       .read<WeatherCubit>()
                       .getWeather(city: city.trim(), lang: lang);
                 }
+                context.read<SearchCubit>().clearSuggestions();
                 setState(() => _isSearching = false);
                 _searchFocus.unfocus();
                 _searchController.clear();
