@@ -1,40 +1,59 @@
-# 🌤️ Weather App - Stay Ahead of the Storm
+# 🌤️ Weatherly | Premium Weather Experience
 
-![Project Header](https://via.placeholder.com/1000x400?text=Weather+App+Presentation)
-
-**Weather App** is a premium, real-time weather tracking application built with Flutter. It provides accurate weather updates, detailed forecasts, and a seamless user experience with a modern, glassmorphic UI.
+![Banner](https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?auto=format&fit=crop&w=1000&q=80)
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white" alt="Flutter">
+  <img src="https://img.shields.io/badge/Dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white" alt="Dart">
+  <img src="https://img.shields.io/badge/Clean%20Architecture-Solid-%234CAF50?style=for-the-badge" alt="Clean Architecture">
+  <img src="https://img.shields.io/badge/BLoC-State%20Management-%23546E7A?style=for-the-badge" alt="BLoC">
+</p>
 
 ---
 
-## ✨ Features
+## 📖 Overview
 
-- **📍 Current Location Weather**: Automatically detects your city to provide local updates.
-- **🔍 Global Search**: Search for weather in any city around the world.
-- **🕒 Hourly & Daily Forecast**: Stay prepared with detailed forecast breakdowns.
-- **🌍 Localization**: Full support for both **English** and **Arabic** languages.
-- **💎 Premium Design**: Modern UI with glassmorphism, smooth animations, and dynamic themes.
-- **🔔 Real-time Updates**: Fetches the latest data from reliable weather providers.
+**Weatherly** is a premium weather tracking application built with **Flutter**. It combines high-accuracy meteorological data with a modern **Glassmorphism** UI. The project is engineered with scalability in mind, using industry-standard design patterns to provide a seamless user experience.
+
+> **Core Focus:** Clean Architecture, Predictable State Management, and High-Fidelity UI.
+
+---
+
+## 🚀 Key Features
+
+| Feature | Description |
+| :--- | :--- |
+| 📍 **Smart Geolocation** | Instant local weather detection using the `geolocator` package. |
+| 🔍 **Global Search** | Powerful search functionality to check weather for any city worldwide. |
+| 📊 **Detailed Forecasts** | Comprehensive hourly and 7-day breakdowns with visual data. |
+| 🌐 **Localization** | Full support for **Arabic** (RTL) and **English** languages. |
+| 💎 **Glassmorphic UI** | Premium blur effects, smooth animations, and `shimmer` loading states. |
+| 🌓 **Dynamic Themes** | Visuals that adapt based on the current weather status. |
 
 ---
 
 ## 🛠️ Tech Stack & Architecture
 
-This project follows **Clean Architecture** principles and uses the following top-tier libraries:
+This project follows **Clean Architecture** principles (Data, Domain, Presentation layers) to ensure the codebase remains maintainable and testable.
 
-- **State Management**: [flutter_bloc](https://pub.dev/packages/flutter_bloc) (Predictable & testable state)
-- **Networking**: [http](https://pub.dev/packages/http) (Seamless API communication)
-- **Geolocation**: [geolocator](https://pub.dev/packages/geolocator) (Accurate positioning)
-- **Localization**: [flutter_localizations](https://pub.dev/packages/flutter_localizations)
-- **Fonts**: [google_fonts](https://pub.dev/packages/google_fonts) (Outfit)
-- **Visuals**: [shimmer](https://pub.dev/packages/shimmer) for premium loading states.
+* **State Management:** `flutter_bloc` for robust and predictable state transitions.
+* **Networking:** `http` for seamless REST API communication.
+* **Fonts & Visuals:** `google_fonts` (Outfit) and `shimmer` for high-end loading effects.
+* **Geolocation:** `geolocator` for precise user positioning.
 
 ---
 
-## 📸 Screenshots
+## ⚙️ Setup & Installation
 
-| Welcome Screen | Home Screen | Search & Details |
-| :---: | :---: | :---: |
-| ![Welcome](https://via.placeholder.com/200x400?text=Welcome+UI) | ![Home](https://via.placeholder.com/200x400?text=Home+UI) | ![Details](https://via.placeholder.com/200x400?text=Details+UI) |
+Follow these steps to get the project running on your local machine:
+
+### 1. Prerequisites
+* Ensure you have the [Flutter SDK](https://docs.flutter.dev/get-started/install) installed.
+* Get a free API Key from [OpenWeatherMap](https://openweathermap.org/api).
+
+### 2. Clone the Repository
+```bash
+git clone [https://github.com/dev-momensalman/Weather_App.git](https://github.com/dev-momensalman/Weather_App.git)
+cd Weather_App
 
 ---
 
