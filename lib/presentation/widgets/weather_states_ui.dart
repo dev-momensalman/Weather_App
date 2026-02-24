@@ -1,6 +1,5 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 
 // ─── Welcome Screen ────────────────────────────────────────────────────────
@@ -9,6 +8,7 @@ class WeatherWelcomeWidget extends StatelessWidget {
   final VoidCallback onUseLocation;
   final TextEditingController searchController;
   final VoidCallback onSearch;
+  final VoidCallback onLanguageToggle;
   final String lang;
 
   const WeatherWelcomeWidget({
@@ -16,6 +16,7 @@ class WeatherWelcomeWidget extends StatelessWidget {
     required this.onUseLocation,
     required this.searchController,
     required this.onSearch,
+    required this.onLanguageToggle,
     this.lang = 'ar',
   });
 
@@ -34,11 +35,52 @@ class WeatherWelcomeWidget extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+          child: Stack(
+            children: [
+              // Language Toggle (Top Right)
+              Positioned(
+                top: 10,
+                right: isAr ? null : 20,
+                left: isAr ? 20 : null,
+                child: GestureDetector(
+                  onTap: onLanguageToggle,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: BackdropFilter(
+                      filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.white24),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.language_rounded, color: Colors.white70, size: 18),
+                            const SizedBox(width: 8),
+                            Text(
+                              isAr ? 'English' : 'العربية',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 28),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
                 const Spacer(flex: 2),
 
                 // Icon
@@ -69,7 +111,7 @@ class WeatherWelcomeWidget extends StatelessWidget {
 
                 Text(
                   isAr ? 'مرحباً بك في طقسي' : 'Welcome to Taqsi',
-                  style: GoogleFonts.cairo(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -83,7 +125,7 @@ class WeatherWelcomeWidget extends StatelessWidget {
                   isAr
                       ? 'احصل على طقس دقيق لموقعك أو أي مدينة في العالم'
                       : 'Get accurate weather for your location or any city worldwide',
-                  style: GoogleFonts.cairo(
+                  style: const TextStyle(
                     color: Colors.white54,
                     fontSize: 15,
                     height: 1.6,
@@ -99,13 +141,13 @@ class WeatherWelcomeWidget extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: onUseLocation,
                     icon: const Icon(Icons.my_location_rounded),
-                    label: Text(
-                      isAr ? 'استخدام موقعي الحالي' : 'Use My Location',
-                      style: GoogleFonts.cairo(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                      label: Text(
+                        isAr ? 'استخدام موقعي الحالي' : 'Use My Location',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF4FC3F7),
                       foregroundColor: Colors.white,
@@ -127,7 +169,7 @@ class WeatherWelcomeWidget extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         isAr ? 'أو' : 'or',
-                        style: GoogleFonts.cairo(
+                        style: const TextStyle(
                           color: Colors.white38,
                           fontSize: 14,
                         ),
@@ -148,13 +190,13 @@ class WeatherWelcomeWidget extends StatelessWidget {
                   ),
                   child: TextField(
                     controller: searchController,
-                    style: GoogleFonts.cairo(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     textInputAction: TextInputAction.search,
                     textDirection: isAr ? ui.TextDirection.rtl : ui.TextDirection.ltr,
                     onSubmitted: (_) => onSearch(),
                     decoration: InputDecoration(
                       hintText: isAr ? 'اكتب اسم المدينة...' : 'Enter city name...',
-                      hintStyle: GoogleFonts.cairo(color: Colors.white38),
+                      hintStyle: const TextStyle(color: Colors.white38),
                       prefixIcon: const Icon(Icons.search_rounded,
                           color: Colors.white38),
                       suffixIcon: IconButton(
@@ -169,9 +211,10 @@ class WeatherWelcomeWidget extends StatelessWidget {
                   ),
                 ),
 
-                const Spacer(flex: 3),
-              ],
-            ),
+                ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -275,7 +318,7 @@ class WeatherErrorWidget extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 isAr ? 'حدث خطأ' : 'Something went wrong',
-                style: GoogleFonts.cairo(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -284,7 +327,7 @@ class WeatherErrorWidget extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 message,
-                style: GoogleFonts.cairo(
+                style: const TextStyle(
                   color: Colors.white54,
                   fontSize: 14,
                   height: 1.6,
@@ -297,7 +340,7 @@ class WeatherErrorWidget extends StatelessWidget {
                 icon: const Icon(Icons.refresh_rounded),
                 label: Text(
                   isAr ? 'إعادة المحاولة' : 'Try Again',
-                  style: GoogleFonts.cairo(
+                  style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
@@ -319,7 +362,7 @@ class WeatherErrorWidget extends StatelessWidget {
                   icon: const Icon(Icons.settings_rounded, color: Colors.white70),
                   label: Text(
                     isAr ? 'افتح الإعدادات' : 'Open Settings',
-                    style: GoogleFonts.cairo(
+                    style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 14,
                     ),

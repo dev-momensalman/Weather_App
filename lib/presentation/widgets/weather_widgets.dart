@@ -1,6 +1,5 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../data/models/weather_model.dart';
 import 'weather_theme.dart';
@@ -53,7 +52,7 @@ class HourlyForecastStrip extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(
                         isAr ? 'التوقعات الساعية' : 'Hourly Forecast',
-                        style: GoogleFonts.cairo(
+                    style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
@@ -131,7 +130,7 @@ class _HourCard extends StatelessWidget {
             isNow
                 ? (isAr ? 'الآن' : 'Now')
                 : DateFormat('h a', isAr ? 'ar' : 'en').format(hTime),
-            style: GoogleFonts.cairo(
+            style: TextStyle(
               color: isNow ? accent : Colors.white60,
               fontSize: 10,
               fontWeight: isNow ? FontWeight.bold : FontWeight.normal,
@@ -148,7 +147,7 @@ class _HourCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             '${hour.temp.round()}°',
-            style: GoogleFonts.cairo(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 15,
               fontWeight: FontWeight.bold,
@@ -194,7 +193,7 @@ class DailyForecastRow extends StatelessWidget {
                   ? (isAr ? 'اليوم' : 'Today')
                   : DateFormat('EEEE', isAr ? 'ar' : 'en')
                       .format(DateTime.parse(day.date)),
-              style: GoogleFonts.cairo(
+              style: TextStyle(
                 color: isToday ? accent : Colors.white,
                 fontSize: 12,
                 fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
@@ -210,8 +209,8 @@ class DailyForecastRow extends StatelessWidget {
                 color: Color(0xFF64B5F6), size: 11),
             Text(
               '${day.chanceOfRain}%',
-              style: GoogleFonts.cairo(
-                color: const Color(0xFF64B5F6),
+              style: const TextStyle(
+                color: Color(0xFF64B5F6),
                 fontSize: 10,
               ),
             ),
@@ -230,7 +229,7 @@ class DailyForecastRow extends StatelessWidget {
             width: 26,
             child: Text(
               '${day.minTemp.round()}°',
-              style: GoogleFonts.cairo(
+              style: const TextStyle(
                 color: Colors.white38,
                 fontSize: 12,
               ),
@@ -248,7 +247,7 @@ class DailyForecastRow extends StatelessWidget {
             width: 26,
             child: Text(
               '${day.maxTemp.round()}°',
-              style: GoogleFonts.cairo(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
@@ -403,7 +402,7 @@ class _StatTile extends StatelessWidget {
                   fit: BoxFit.scaleDown,
                   child: Text(
                     value,
-                    style: GoogleFonts.cairo(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -414,7 +413,7 @@ class _StatTile extends StatelessWidget {
                   fit: BoxFit.scaleDown,
                   child: Text(
                     label,
-                    style: GoogleFonts.cairo(
+                    style: const TextStyle(
                       color: Colors.white54,
                       fontSize: 10,
                     ),

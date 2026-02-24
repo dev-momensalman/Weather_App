@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import '../../logic/language_cubit/language_cubit.dart';
@@ -82,6 +81,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               return WeatherWelcomeWidget(
                 lang: lang,
                 searchController: _searchController,
+                onLanguageToggle: () {
+                  context.read<LanguageCubit>().toggle();
+                },
                 onUseLocation: () {
                   context.read<WeatherCubit>().getWeather(lang: lang);
                 },
@@ -188,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                         dense: true,
                                                         title: Text(
                                                           city,
-                                                          style: GoogleFonts.cairo(color: Colors.white, fontSize: 13),
+                                                          style: const TextStyle(color: Colors.white, fontSize: 13),
                                                         ),
                                                         onTap: () {
                                                           context.read<SearchCubit>().clearSuggestions();
@@ -220,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           const SizedBox(width: 6),
                                           Text(
                                             _getLocalizedLocation(w.cityName, w.country, isAr),
-                                            style: GoogleFonts.cairo(
+                                            style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 18,
                                               fontWeight: FontWeight.w600,
@@ -235,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       Text(
                                         DateFormat('EEEE، d MMMM y', isAr ? 'ar' : 'en')
                                             .format(DateTime.now()),
-                                        style: GoogleFonts.cairo(
+                                        style: const TextStyle(
                                           color: Colors.white54,
                                           fontSize: 14,
                                         ),
@@ -262,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       // ─── Temperature ──────────────────
                                       Text(
                                         '${w.temp.round()}°',
-                                        style: GoogleFonts.cairo(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 72,
                                           fontWeight: FontWeight.w200,
@@ -273,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       // ─── Condition ────────────────────
                                       Text(
                                         w.condition,
-                                        style: GoogleFonts.cairo(
+                                        style: const TextStyle(
                                           color: Colors.white70,
                                           fontSize: 16,
                                         ),
@@ -286,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         isAr
                                             ? 'الإحساس بـ ${w.feelsLike.round()}°'
                                             : 'Feels like ${w.feelsLike.round()}°',
-                                        style: GoogleFonts.cairo(
+                                        style: const TextStyle(
                                           color: Colors.white38,
                                           fontSize: 14,
                                         ),
@@ -339,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         isAr
                                             ? 'آخر تحديث: ${DateFormat('h:mm a', 'ar').format(DateTime.now())}'
                                             : 'Last updated: ${DateFormat('h:mm a', 'en').format(DateTime.now())}',
-                                        style: GoogleFonts.cairo(
+                                        style: const TextStyle(
                                           color: Colors.white24,
                                           fontSize: 12,
                                         ),
@@ -389,12 +391,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: TextField(
               controller: _searchController,
               focusNode: _searchFocus,
-              style: GoogleFonts.cairo(color: Colors.white, fontSize: 16),
+              style: const TextStyle(color: Colors.white, fontSize: 16),
               textInputAction: TextInputAction.search,
               textDirection: isAr ? ui.TextDirection.rtl : ui.TextDirection.ltr,
               decoration: InputDecoration(
                 hintText: isAr ? 'ابحث عن مدينة...' : 'Search a city...',
-                hintStyle: GoogleFonts.cairo(
+                hintStyle: const TextStyle(
                   color: Colors.white38,
                   fontSize: 15,
                 ),
@@ -472,7 +474,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             alignment: Alignment.center,
             child: Text(
               isAr ? 'EN' : 'ع',
-              style: GoogleFonts.cairo(
+            style: TextStyle(
                 color: Colors.white,
                 fontSize: isAr ? 12 : 16,
                 fontWeight: FontWeight.bold,
@@ -503,7 +505,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 Icon(Icons.keyboard_arrow_up_rounded, color: accent, size: 20),
                 Text(
                   '${max.round()}°',
-                  style: GoogleFonts.cairo(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -519,7 +521,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     color: Colors.white38, size: 20),
                 Text(
                   '${min.round()}°',
-                  style: GoogleFonts.cairo(
+                  style: const TextStyle(
                     color: Colors.white54,
                     fontSize: 16,
                   ),
@@ -558,7 +560,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       isAr
                           ? 'التوقعات لـ ${forecast.length} أيام'
                           : '${forecast.length}-Day Forecast',
-                      style: GoogleFonts.cairo(
+                      style: const TextStyle(
                         color: Colors.white70,
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
