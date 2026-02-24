@@ -62,9 +62,9 @@ class HourlyForecastStrip extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 8),
                 SizedBox(
-                  height: 100,
+                  height: 90,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -133,7 +133,7 @@ class _HourCard extends StatelessWidget {
                 : DateFormat('h a', isAr ? 'ar' : 'en').format(hTime),
             style: GoogleFonts.cairo(
               color: isNow ? accent : Colors.white60,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: isNow ? FontWeight.bold : FontWeight.normal,
             ),
           ),
@@ -184,7 +184,7 @@ class DailyForecastRow extends StatelessWidget {
         color: isToday ? accent.withValues(alpha: 0.12) : Colors.transparent,
         borderRadius: BorderRadius.circular(16),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       child: Row(
         children: [
           // Day name — fills remaining space
@@ -314,9 +314,9 @@ class WeatherStatsGrid extends StatelessWidget {
       crossAxisCount: 3,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 12,
-      crossAxisSpacing: 12,
-      childAspectRatio: 0.9,
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 8,
+      childAspectRatio: 1.1,
       children: [
         _StatTile(
           icon: Icons.water_drop_rounded,
@@ -385,7 +385,7 @@ class _StatTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -396,9 +396,9 @@ class _StatTile extends StatelessWidget {
                     color: accent.withValues(alpha: 0.15),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(icon, color: accent, size: 18),
+                  child: Icon(icon, color: accent, size: 16),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 2),
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(

@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       // ─── Search Bar + Lang Toggle ──────
                                       _buildSearchBar(context, accent, lang),
 
-                                      const SizedBox(height: 36),
+                                      const SizedBox(height: 16),
 
                                       // ─── City + Country ───────────────
                                       Row(
@@ -171,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             _getLocalizedLocation(w.cityName, w.country, isAr),
                                             style: GoogleFonts.cairo(
                                               color: Colors.white,
-                                              fontSize: 20,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
@@ -190,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         ),
                                       ),
 
-                                      const SizedBox(height: 20),
+                                      const SizedBox(height: 8),
 
                                       // ─── Weather Emoji ─────────────────
                                       AnimatedBuilder(
@@ -202,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         ),
                                         child: Text(
                                           emoji,
-                                          style: const TextStyle(fontSize: 90),
+                                          style: const TextStyle(fontSize: 64),
                                         ),
                                       ),
 
@@ -213,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         '${w.temp.round()}°',
                                         style: GoogleFonts.cairo(
                                           color: Colors.white,
-                                          fontSize: 96,
+                                          fontSize: 72,
                                           fontWeight: FontWeight.w200,
                                           height: 1.0,
                                         ),
@@ -224,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         w.condition,
                                         style: GoogleFonts.cairo(
                                           color: Colors.white70,
-                                          fontSize: 20,
+                                          fontSize: 16,
                                         ),
                                       ),
 
@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         ),
                                       ),
 
-                                      const SizedBox(height: 24),
+                                      const SizedBox(height: 12),
 
                                       // ─── Hi / Lo strip ────────────────
                                       if (w.forecast.isNotEmpty)
@@ -251,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             accent,
                                             isAr),
 
-                                      const SizedBox(height: 28),
+                                      const SizedBox(height: 16),
 
                                       // ─── Stats Grid ───────────────────
                                       WeatherStatsGrid(
@@ -281,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       _buildDailyForecastCard(
                                           w.forecast, weatherType, accent, lang),
 
-                                      const SizedBox(height: 32),
+                                      const SizedBox(height: 16),
 
                                       // ─── Footer ───────────────────────
                                       Text(
