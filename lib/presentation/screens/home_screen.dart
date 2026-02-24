@@ -518,4 +518,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
     );
   }
+
+  String _getLocalizedLocation(String city, String country, bool isAr) {
+    const countryMap = {
+      'Egypt': 'مصر',
+      'Saudi Arabia': 'السعودية',
+      'United Arab Emirates': 'الإمارات',
+      'Kuwait': 'الكويت',
+      'Qatar': 'قطر',
+      'Oman': 'عمان',
+      'Bahrain': 'البحرين',
+      'Jordan': 'الأردن',
+      'Lebanon': 'لبنان',
+      'Syria': 'سوريا',
+      'Palestine': 'فلسطين',
+      'Iraq': 'العراق',
+      'Yemen': 'اليمن',
+      'Libya': 'ليبيا',
+      'Sudan': 'السودان',
+      'Morocco': 'المغرب',
+      'Algeria': 'الجزائر',
+      'Tunisia': 'تونس',
+      'Mauritania': 'موريتانيا',
+      'Somalia': 'الصومال',
+      'Djibouti': 'جيبوتي',
+      'Comoros': 'جزر القمر',
+    };
+
+    final localizedCountry = isAr ? (countryMap[country] ?? country) : country;
+    final separator = isAr ? '، ' : ', ';
+
+    return '$city$separator$localizedCountry';
+  }
 }
