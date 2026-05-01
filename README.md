@@ -38,7 +38,7 @@
 ## 🚀 Key Features
 * 📍 **Smart Geolocation:** Instant local weather detection using `geolocator`.
 * 🔍 **Global Search:** Check weather for any city worldwide.
-* 📊 **Detailed Forecasts:** Comprehensive hourly and 7-day breakdowns.
+* 📊 **Detailed Forecasts:** Comprehensive hourly and 3-day breakdowns.
 * 🌐 **Localization:** Full support for **Arabic** and **English**.
 * 💎 **Glassmorphic UI:** Premium blur effects and smooth `shimmer` animations.
 
