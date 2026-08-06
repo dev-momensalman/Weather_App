@@ -1,70 +1,109 @@
-# <p align="center"> 🌤️ Weatherly | Premium Weather Experience </p>
+# Taqsi Weather App
 
-<p align="center">
-  <img src="https://github.com/dev-momensalman/Weather_App/blob/main/assets/pngtree-rainy-cloud-icon-with-blue-raindrops-for-weather-forecasts-and-illustrations-png-image_20128308.png" width="350" style="border-radius: 20px;" alt="Weatherly Main Banner">
-</p>
+Taqsi is a Flutter weather app with Arabic and English support, location-based forecasts, city search, and a polished dark interface. It uses WeatherAPI data to display current conditions, hourly weather, and multi-day forecasts in a clear mobile experience.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white">
-  <img src="https://img.shields.io/badge/Dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white">
-  <img src="https://img.shields.io/badge/Clean%20Architecture-Solid-%234CAF50?style=for-the-badge">
-  <img src="https://img.shields.io/badge/BLoC-State%20Management-%23546E7A?style=for-the-badge">
-</p>
+## Overview
 
----
+The project is structured around data providers, repositories, Cubits, and presentation widgets. It demonstrates practical Flutter architecture with API integration, geolocation permissions, localization, state management, and dynamic weather UI.
 
-## 📖 Overview
-**Weatherly** is a premium weather tracking application built with **Flutter**. It combines high-accuracy meteorological data with a modern **Glassmorphism** UI. The project is engineered with scalability in mind, using industry-standard design patterns to provide a seamless user experience.
+## Features
 
-> **Core Focus:** Clean Architecture, Predictable State Management, and High-Fidelity UI.
+- Current weather by device location
+- City search with remote suggestions
+- Arabic and English language switching
+- 7-day forecast from WeatherAPI
+- Hourly forecast for the current day
+- Weather details including humidity, wind speed, UV, visibility, cloud coverage, and feels-like temperature
+- Location permission handling with Arabic and English error messages
+- Fallback to last known location when direct GPS lookup times out
+- Dynamic weather visuals and dark Material 3 styling
+- Shimmer and polished loading states
 
----
+## Tech Stack
 
-## 📱 User Interface (User Journey)
+- Flutter
+- Dart
+- Flutter Bloc / Cubit
+- WeatherAPI forecast and search endpoints
+- `geolocator` for device location
+- `http` for API requests
+- `google_fonts` with Cairo font
+- `intl` and Flutter localization delegates
+- `shimmer` for loading UI
 
-<p align="center">
-  <img src="https://github.com/dev-momensalman/Weather_App/blob/main/assets/Screenshot_20260224_062957.png?raw=true" width="160" alt="Welcome Screen" />
-  <img src="https://github.com/dev-momensalman/Weather_App/blob/main/assets/Screenshot_20260224_063041.png?raw=true" width="160" alt="Permission Request" />
-  <img src="https://github.com/dev-momensalman/Weather_App/blob/main/assets/Screenshot_20260224_063203.png?raw=true" width="160" alt="Main Weather Dashboard" />
-  <img src="https://github.com/dev-momensalman/Weather_App/blob/main/assets/Screenshot_20260224_063211.png?raw=true" width="160" alt="Detailed Forecast" />
-</p>
+## Project Structure
 
-<p align="center">
-  <i>1. Welcome Screen &nbsp;&nbsp;&nbsp; 2. Location Permission &nbsp;&nbsp;&nbsp; 3. Current Weather &nbsp;&nbsp;&nbsp; 4. Weather Details</i>
-</p>
+```text
+lib/
+├── main.dart                                  # App startup, providers, localization, theme
+├── data/
+│   ├── data_providers/
+│   │   └── weather_provider.dart             # WeatherAPI HTTP requests
+│   ├── models/
+│   │   └── weather_model.dart                # Current, daily, and hourly weather models
+│   └── repositories/
+│       └── weather_repository.dart           # Location flow, parsing, and search handling
+├── logic/
+│   ├── language_cubit/                       # App language state
+│   ├── search_cubit/                         # City search state
+│   └── weather_cubit/                        # Weather loading state
+└── presentation/
+    ├── screens/
+    │   └── home_screen.dart                  # Main weather dashboard
+    └── widgets/                              # Cards, themes, states, and weather UI pieces
+```
 
----
+## Main Flow
 
-## 🚀 Key Features
-* 📍 **Smart Geolocation:** Instant local weather detection using `geolocator`.
-* 🔍 **Global Search:** Check weather for any city worldwide.
-* 📊 **Detailed Forecasts:** Comprehensive hourly and 3-day breakdowns.
-* 🌐 **Localization:** Full support for **Arabic** and **English**.
-* 💎 **Glassmorphic UI:** Premium blur effects and smooth `shimmer` animations.
+1. `main.dart` registers the weather repository and Cubits using `MultiBlocProvider`.
+2. `LanguageCubit` controls the current locale and switches the app between Arabic and English.
+3. `WeatherCubit` requests weather data through `WeatherRepository`.
+4. If no city is selected, the repository requests the current GPS position through `geolocator`.
+5. `WeatherProvider` calls WeatherAPI and returns raw JSON.
+6. `WeatherModel` converts the response into current, daily, and hourly forecast objects.
+7. The presentation layer displays the result through reusable weather widgets and state-specific UI.
 
----
+## Getting Started
 
-## 🛠️ Tech Stack & Architecture
-* **State Management:** `flutter_bloc` for predictable state.
-* **Architecture:** Clean Architecture (Data, Domain, Presentation).
-* **Networking:** `http` for REST API communication.
-* **Visuals:** `google_fonts` (Outfit) & dynamic weather-based themes.
+### Requirements
 
----
+- Flutter SDK 3.9.2 or newer
+- Dart SDK included with Flutter
+- Android Studio, VS Code, or another Flutter-compatible IDE
+- WeatherAPI key
+- Location permissions configured for Android/iOS
 
-## ⚙️ Setup & Installation
+### Run Locally
 
-### 1. Prerequisites
-* [Flutter SDK](https://docs.flutter.dev/get-started/install)
-* OpenWeatherMap [API Key](https://openweathermap.org/api)
-
-### 2. Installation
 ```bash
-# Clone the repository
-git clone [https://github.com/dev-momensalman/Weather_App.git](https://github.com/dev-momensalman/Weather_App.git)
-
-# Install dependencies
+git clone https://github.com/dev-momensalman/Weather_App.git
+cd Weather_App
 flutter pub get
-
-# Run the app
 flutter run
+```
+
+## API Configuration
+
+The API request logic is currently inside:
+
+```text
+lib/data/data_providers/weather_provider.dart
+```
+
+For production or public releases, move the API key out of source code and load it from an environment/config file that is not committed to the repository.
+
+## Notes for Reviewers
+
+- The app title changes based on the selected language: Arabic uses `طقسي - تطبيق الطقس`, English uses `Taqsi - Weather App`.
+- The repository layer contains the main location and error-handling logic.
+- The model file shows exactly how WeatherAPI JSON is converted into app data.
+- The UI is split between `home_screen.dart` and reusable widgets under `lib/presentation/widgets`.
+- A real device gives the best review experience because GPS and location permissions are part of the main flow.
+
+## Future Improvements
+
+- Move the WeatherAPI key to a secure configuration layer
+- Cache the latest successful forecast for offline display
+- Add saved favorite cities
+- Add unit tests for model parsing and repository errors
+- Add widget tests for loading, success, and error states
